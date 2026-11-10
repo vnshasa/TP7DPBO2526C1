@@ -1,0 +1,350 @@
+/* ================================================================
+   RUANGBACA - TAMPILAN WEBSITE PERPUSTAKAAN MINI
+   CSS ini hanya mengatur tampilan. Proses CRUD tetap ditangani PHP.
+   ================================================================ */
+
+/* Warna utama dan ukuran dasar disimpan agar mudah disesuaikan. */
+:root {
+    --forest: #173d34;
+    --forest-deep: #102f29;
+    --forest-soft: #e7f0e9;
+    --sage: #dce8dc;
+    --cream: #f6f7f1;
+    --paper: #ffffff;
+    --ink: #1d302b;
+    --muted: #78847d;
+    --line: #e8ede7;
+    --gold: #e8bd75;
+    --coral: #d97962;
+    --shadow: 0 16px 42px rgba(25, 55, 45, 0.07);
+}
+
+/* Semua elemen memakai perhitungan ukuran yang konsisten. */
+* { box-sizing: border-box; }
+html { min-width: 320px; scroll-behavior: smooth; }
+body {
+    margin: 0;
+    color: var(--ink);
+    background: var(--cream);
+    font-family: "Segoe UI", Arial, sans-serif;
+    font-size: 14px;
+    -webkit-font-smoothing: antialiased;
+}
+a { color: inherit; }
+button, input, select, textarea { font: inherit; }
+button, a { -webkit-tap-highlight-color: transparent; }
+
+/* Layout besar: sidebar tetap di kiri, konten berada di kanan. */
+.app-shell { min-height: 100vh; display: flex; }
+.sidebar {
+    position: sticky;
+    top: 0;
+    display: flex;
+    flex: 0 0 248px;
+    flex-direction: column;
+    width: 248px;
+    height: 100vh;
+    min-height: 650px;
+    padding: 27px 19px 20px;
+    overflow: hidden;
+    color: #f4f5ed;
+    background:
+        radial-gradient(circle at 12% 16%, rgba(122, 163, 128, .17), transparent 29%),
+        radial-gradient(circle at 100% 70%, rgba(232, 189, 117, .10), transparent 28%),
+        linear-gradient(165deg, #1b493d 0%, #153a32 48%, #102f29 100%);
+}
+.sidebar::after {
+    position: absolute;
+    right: -92px;
+    bottom: 145px;
+    width: 210px;
+    height: 210px;
+    border: 1px solid rgba(255,255,255,.07);
+    border-radius: 50%;
+    content: "";
+    pointer-events: none;
+}
+.brand { position: relative; z-index: 1; display: flex; align-items: center; gap: 12px; color: #fff; text-decoration: none; }
+.brand-mark {
+    display: grid;
+    width: 43px;
+    height: 43px;
+    place-items: center;
+    border: 1px solid rgba(255,255,255,.18);
+    border-radius: 14px;
+    background: rgba(255,255,255,.12);
+}
+.brand-mark svg { width: 27px; fill: none; stroke: #f2d49f; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
+.brand-copy { display: flex; flex-direction: column; gap: 3px; }
+.brand-copy strong { font-family: Georgia, "Times New Roman", serif; font-size: 21px; font-weight: 600; letter-spacing: -.5px; }
+.brand-copy small { color: #b9cbbf; font-size: 8px; font-weight: 700; letter-spacing: 1.6px; }
+.sidebar-rule { height: 1px; margin: 29px 3px 26px; background: rgba(255,255,255,.13); }
+.sidebar-label { margin: 0 0 11px 10px; color: #93afa0; font-size: 9px; font-weight: 800; letter-spacing: 1.6px; }
+.side-navigation { position: relative; z-index: 1; display: grid; gap: 7px; }
+.side-link {
+    display: flex;
+    min-height: 48px;
+    align-items: center;
+    gap: 12px;
+    padding: 0 12px;
+    border: 1px solid transparent;
+    border-radius: 12px;
+    color: #d4e1d8;
+    font-size: 13px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: background .18s ease, color .18s ease, transform .18s ease;
+}
+.side-link:hover { color: #fff; background: rgba(255,255,255,.09); transform: translateX(2px); }
+.side-link.active { color: #173d34; background: #f1e8d4; box-shadow: 0 8px 20px rgba(0,0,0,.10); }
+.nav-icon { display: grid; width: 23px; height: 23px; place-items: center; }
+.nav-icon svg { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 1.65; stroke-linecap: round; stroke-linejoin: round; }
+.nav-count { min-width: 24px; margin-left: auto; padding: 4px 6px; border-radius: 7px; color: #d7e6db; background: rgba(255,255,255,.10); font-size: 10px; text-align: center; }
+.side-link.active .nav-count { color: #34564a; background: rgba(23,61,52,.10); }
+.sidebar-note {
+    position: relative;
+    z-index: 1;
+    margin-top: auto;
+    padding: 17px 15px 14px;
+    overflow: hidden;
+    border: 1px solid rgba(255,255,255,.12);
+    border-radius: 15px;
+    background: rgba(255,255,255,.075);
+}
+.note-spark { color: var(--gold); font-size: 17px; }
+.note-title { margin: 8px 0 5px; color: #fff; font-family: Georgia, "Times New Roman", serif; font-size: 16px; }
+.note-copy { max-width: 160px; margin: 0; color: #bfd0c4; font-size: 10px; line-height: 1.65; }
+.note-books { display: flex; height: 31px; align-items: flex-end; gap: 4px; margin-top: 14px; }
+.note-books i { display: block; width: 13px; border: 1px solid rgba(255,255,255,.18); border-radius: 3px 3px 1px 1px; background: #d99a70; }
+.note-books i:nth-child(1) { height: 23px; background: #dca36f; }
+.note-books i:nth-child(2) { height: 29px; background: #90aa87; }
+.note-books i:nth-child(3) { height: 25px; background: #e8c98e; }
+.note-books i:nth-child(4) { height: 20px; background: #b77c65; }
+.sidebar-bottom { position: relative; z-index: 1; display: flex; align-items: center; gap: 8px; margin: 19px 2px 0; color: #8eaa99; font-size: 9px; font-weight: 700; letter-spacing: 1.1px; }
+.sidebar-bottom-dot { width: 6px; height: 6px; border-radius: 50%; background: #e3bc79; box-shadow: 0 0 0 4px rgba(227,188,121,.12); }
+
+/* Area konten utama dan baris identitas bagian atas. */
+.workspace { width: calc(100% - 248px); max-width: 1600px; min-width: 0; margin: 0 auto; padding: 0 42px 25px; }
+.topbar { display: flex; min-height: 86px; align-items: center; justify-content: space-between; gap: 20px; }
+.topbar-kicker { margin: 0 0 5px; color: #8b958e; font-size: 9px; font-weight: 800; letter-spacing: 1.65px; }
+.topbar-location { margin: 0; color: #8b958e; font-size: 11px; }
+.topbar-location span { padding: 0 7px; color: #c3cbc4; }
+.topbar-location a { color: #718278; text-decoration: none; }
+.topbar-location a:hover { color: var(--forest); }
+.topbar-location strong { color: #43594e; font-weight: 700; }
+.profile-chip { display: flex; align-items: center; gap: 10px; padding: 7px 11px 7px 7px; border: 1px solid #e7ebe4; border-radius: 13px; background: rgba(255,255,255,.74); }
+.profile-avatar { display: grid; width: 34px; height: 34px; place-items: center; border-radius: 10px; color: #fff; background: var(--forest); font-family: Georgia, "Times New Roman", serif; font-size: 12px; }
+.profile-copy { display: flex; flex-direction: column; gap: 2px; }
+.profile-copy strong { color: #34483e; font-size: 11px; }
+.profile-copy small { color: #929b94; font-size: 9px; }
+.profile-chevron { margin-left: 8px; color: #89948d; font-size: 17px; }
+
+/* Banner dekoratif dibuat dari CSS sehingga tidak membutuhkan gambar luar. */
+.welcome-banner {
+    position: relative;
+    display: flex;
+    min-height: 214px;
+    align-items: center;
+    justify-content: space-between;
+    overflow: hidden;
+    border-radius: 22px;
+    background: linear-gradient(105deg, #e7eee3 0%, #e5ecdf 54%, #d6e3d6 100%);
+    box-shadow: 0 12px 32px rgba(37,74,57,.06);
+}
+.welcome-banner::before { position: absolute; top: -120px; left: 44%; width: 280px; height: 280px; border: 1px solid rgba(36,83,62,.07); border-radius: 50%; content: ""; }
+.welcome-banner::after { position: absolute; top: -78px; left: 49%; width: 205px; height: 205px; border: 1px solid rgba(36,83,62,.07); border-radius: 50%; content: ""; }
+.welcome-copy { position: relative; z-index: 2; max-width: 560px; padding: 28px 0 30px 34px; }
+.welcome-tag { display: inline-flex; align-items: center; gap: 8px; color: #607a68; font-size: 8px; font-weight: 800; letter-spacing: 1.55px; }
+.welcome-tag span { width: 6px; height: 6px; border-radius: 50%; background: #c28d51; box-shadow: 0 0 0 4px rgba(194,141,81,.13); }
+.welcome-copy h2 { margin: 13px 0 9px; color: #1c4939; font-family: Georgia, "Times New Roman", serif; font-size: clamp(25px, 3vw, 36px); font-weight: 500; letter-spacing: -1.05px; line-height: 1.12; }
+.welcome-copy h2 em { color: #9a6e4b; font-weight: 500; }
+.welcome-copy > p { max-width: 410px; margin: 0; color: #718477; font-size: 11px; line-height: 1.7; }
+.welcome-link { display: inline-flex; align-items: center; gap: 10px; margin-top: 17px; color: #315a46; font-size: 10px; font-weight: 800; text-decoration: none; }
+.welcome-link span { display: grid; width: 22px; height: 22px; place-items: center; border-radius: 50%; color: #fff; background: #315a46; font-size: 14px; transition: transform .18s ease; }
+.welcome-link:hover span { transform: translateX(3px); }
+.welcome-art { position: relative; align-self: stretch; width: 38%; min-width: 270px; max-width: 410px; overflow: hidden; }
+.art-orbit { position: absolute; right: 44px; bottom: -93px; width: 250px; height: 250px; border: 1px solid rgba(44,88,65,.14); border-radius: 50%; }
+.orbit-two { right: 75px; bottom: -62px; width: 190px; height: 190px; }
+.art-sun { position: absolute; top: 28px; right: 93px; width: 78px; height: 78px; border-radius: 50%; background: #e7bd78; opacity: .85; }
+.book-stack { position: absolute; z-index: 1; right: 96px; bottom: 31px; width: 116px; height: 132px; border: 1px solid rgba(25,58,43,.22); border-radius: 6px 9px 5px 5px; box-shadow: 5px 9px 12px rgba(29,63,45,.14); transform: rotate(-8deg); }
+.book-stack::before { position: absolute; top: 0; left: 10px; width: 5px; height: 100%; background: rgba(255,255,255,.17); content: ""; }
+.book-stack span { position: absolute; right: 14px; bottom: 20px; left: 14px; height: 1px; background: rgba(255,255,255,.38); }
+.stack-back { right: 159px; bottom: 26px; width: 95px; height: 112px; background: #b9755d; transform: rotate(-17deg); }
+.stack-middle { right: 64px; bottom: 24px; width: 104px; height: 122px; background: #dfb56e; transform: rotate(8deg); }
+.stack-front { right: 108px; bottom: 29px; width: 112px; height: 143px; background: #285a48; transform: rotate(-1deg); }
+.stack-front::after { position: absolute; top: 27px; right: 20px; left: 20px; height: 49px; border: 1px solid rgba(240,222,181,.55); border-radius: 3px; content: "R"; color: #f0deb5; font-family: Georgia, "Times New Roman", serif; font-size: 31px; line-height: 47px; text-align: center; }
+.art-leaf { position: absolute; z-index: 2; right: 39px; bottom: 71px; width: 22px; height: 54px; border-radius: 100% 0 100% 0; background: #76947a; transform: rotate(28deg); }
+.leaf-two { right: 31px; bottom: 111px; width: 16px; height: 42px; background: #a2b59a; transform: rotate(-20deg); }
+.art-caption { position: absolute; right: 22px; bottom: 14px; color: #819787; font-size: 7px; font-weight: 800; letter-spacing: 2px; }
+
+/* Tiga kartu ringkasan memperlihatkan jumlah data tiap tabel. */
+.stats-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 15px; margin: 19px 0 25px; }
+.stat-card { position: relative; display: grid; min-height: 105px; grid-template-columns: 43px 1fr; grid-template-rows: auto auto auto; column-gap: 12px; align-content: center; padding: 16px 18px; overflow: hidden; border: 1px solid #e9eee7; border-radius: 16px; background: #fff; box-shadow: 0 7px 23px rgba(32,65,50,.035); }
+.stat-card::after { position: absolute; top: -22px; right: -16px; width: 80px; height: 80px; border: 1px solid rgba(30,76,55,.055); border-radius: 50%; content: ""; }
+.stat-icon { display: grid; width: 40px; height: 40px; grid-row: 1 / 4; place-items: center; border-radius: 12px; background: #edf3ec; color: #3e7358; }
+.stat-icon svg { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 1.65; stroke-linecap: round; stroke-linejoin: round; }
+.stat-categories .stat-icon { color: #ae8050; background: #f7f0e5; }
+.stat-authors .stat-icon { color: #a96558; background: #f8ece8; }
+.stat-label { color: #859087; font-size: 10px; font-weight: 700; }
+.stat-number { margin-top: 1px; color: #294c3c; font-family: Georgia, "Times New Roman", serif; font-size: 25px; font-weight: 600; line-height: 1.08; }
+.stat-foot { margin-top: 3px; color: #a0a9a1; font-size: 9px; }
+
+/* Halaman Beranda: pintasan menuju halaman CRUD yang terpisah. */
+.home-page { display: block; }
+.home-section { margin: 26px 0 20px; }
+.home-shortcuts { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 15px; }
+.shortcut-card { position: relative; display: flex; min-height: 190px; flex-direction: column; align-items: flex-start; padding: 20px; overflow: hidden; border: 1px solid #e7ede6; border-radius: 17px; color: #345342; background: #fff; box-shadow: 0 8px 24px rgba(32,65,50,.045); text-decoration: none; transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease; }
+.shortcut-card:hover { transform: translateY(-3px); border-color: #d5e3d6; box-shadow: 0 14px 30px rgba(32,65,50,.09); }
+.shortcut-icon { display: grid; width: 42px; height: 42px; place-items: center; border-radius: 13px; color: #3f7154; background: #edf4ec; }
+.shortcut-icon svg { width: 21px; height: 21px; fill: none; stroke: currentColor; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
+.shortcut-category .shortcut-icon { color: #a77b4d; background: #f7f1e7; }
+.shortcut-author .shortcut-icon { color: #ae695b; background: #f8eeeb; }
+.shortcut-count { position: absolute; top: 23px; right: 19px; padding: 6px 9px; border: 1px solid #e8eee7; border-radius: 30px; color: #728477; background: #f8faf7; font-size: 9px; font-weight: 800; }
+.shortcut-card > strong { margin-top: 17px; color: #2b4938; font-family: Georgia, "Times New Roman", serif; font-size: 18px; font-weight: 600; }
+.shortcut-description { margin-top: 6px; color: #849087; font-size: 10px; line-height: 1.6; }
+.shortcut-action { display: flex; align-items: center; gap: 9px; margin-top: auto; padding-top: 16px; color: #41694f; font-size: 10px; font-weight: 800; }
+.shortcut-action b { display: grid; width: 21px; height: 21px; place-items: center; border-radius: 50%; color: #fff; background: #315a46; font-size: 12px; }
+.home-recent-panel { margin-top: 19px; }
+.home-recent-heading { display: flex; align-items: center; justify-content: space-between; gap: 14px; margin-bottom: 12px; }
+.home-recent-heading h2 { margin: 0; color: #244738; font-family: Georgia, "Times New Roman", serif; font-size: 21px; font-weight: 500; }
+.home-recent-heading .eyebrow { margin-bottom: 5px; }
+.recent-book-list { display: grid; }
+.recent-book-row { display: flex; min-width: 0; align-items: center; gap: 12px; padding: 11px 2px; border-bottom: 1px solid #edf1ec; }
+.recent-book-row:last-child { border-bottom: 0; }
+.recent-book-mark { display: grid; width: 36px; height: 42px; flex: 0 0 36px; place-items: center; border-radius: 5px 9px 9px 5px; color: #f2e4c6; background: #315a46; font-family: Georgia, "Times New Roman", serif; font-size: 16px; box-shadow: inset 4px 0 rgba(255,255,255,.12); }
+.recent-book-info { display: flex; min-width: 0; flex: 1; flex-direction: column; gap: 4px; }
+.recent-book-info strong { overflow: hidden; color: #355141; font-size: 11px; text-overflow: ellipsis; white-space: nowrap; }
+.recent-book-info small { overflow: hidden; color: #89968c; font-size: 9px; text-overflow: ellipsis; white-space: nowrap; }
+.recent-book-year { color: #8d998f; font-size: 10px; font-weight: 700; }
+@media (max-width: 900px) { .home-shortcuts { gap: 10px; } .shortcut-card { padding: 16px; } }
+@media (max-width: 760px) { .home-shortcuts { grid-template-columns: 1fr; } .shortcut-card { min-height: 165px; } .home-recent-heading { align-items: flex-start; flex-direction: column; } }
+
+
+/* Judul tiap halaman CRUD. */
+main { min-width: 0; }
+.section-heading { display: flex; align-items: flex-end; justify-content: space-between; gap: 16px; margin: 4px 0 15px; }
+.eyebrow { margin: 0 0 6px; color: #a27b53; font-size: 9px; font-weight: 800; letter-spacing: 1.6px; }
+.section-heading h2 { margin: 0 0 5px; color: #244738; font-family: Georgia, "Times New Roman", serif; font-size: 25px; font-weight: 500; letter-spacing: -.55px; }
+.subtitle, .muted { margin: 0; color: #849087; font-size: 11px; line-height: 1.6; }
+.count-label { flex: 0 0 auto; padding: 8px 13px; border: 1px solid #dfe9df; border-radius: 30px; color: #467055; background: #edf4ed; font-size: 10px; font-weight: 800; white-space: nowrap; }
+
+/* Panel form dan tabel dibuat seperti kartu putih dengan jarak yang lega. */
+.panel { margin: 14px 0; padding: 21px 23px; border: 1px solid #e9eee8; border-radius: 17px; background: var(--paper); box-shadow: var(--shadow); }
+.panel h3 { display: flex; align-items: center; gap: 9px; margin: 0 0 17px; color: #2a4a3b; font-family: Georgia, "Times New Roman", serif; font-size: 17px; font-weight: 600; }
+.form-panel h3::before, .table-panel h3::before { display: grid; width: 27px; height: 27px; flex: 0 0 27px; place-items: center; border-radius: 8px; color: #467257; background: #edf4ed; font-family: "Segoe UI", Arial, sans-serif; font-size: 14px; }
+.form-panel h3::before { content: "+"; }
+.table-panel h3::before { content: "▤"; font-size: 12px; }
+.form-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 15px 17px; }
+.form-grid.two-columns { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+label { display: flex; min-width: 0; flex-direction: column; gap: 7px; color: #53675b; font-size: 10px; font-weight: 800; letter-spacing: .15px; }
+input, select, textarea { width: 100%; min-height: 41px; padding: 10px 12px; border: 1px solid #e1e8e0; border-radius: 9px; outline: none; color: #2c4035; background: #fbfcfa; font-size: 11px; font-weight: 400; transition: border .16s ease, box-shadow .16s ease, background .16s ease; }
+input::placeholder, textarea::placeholder { color: #aab3ac; }
+input:focus, select:focus, textarea:focus { border-color: #75a184; background: #fff; box-shadow: 0 0 0 3px rgba(78,131,94,.12); }
+textarea { min-height: 74px; resize: vertical; line-height: 1.5; }
+select { cursor: pointer; }
+.form-actions { display: flex; flex-wrap: wrap; gap: 9px; margin-top: 18px; }
+.button { display: inline-flex; min-height: 36px; align-items: center; justify-content: center; gap: 7px; padding: 9px 14px; border: 1px solid transparent; border-radius: 9px; color: #34493d; background: #edf2ed; font-size: 10px; font-weight: 800; text-decoration: none; cursor: pointer; transition: background .17s ease, color .17s ease, transform .17s ease, box-shadow .17s ease; }
+.button:hover { transform: translateY(-1px); }
+.button.primary { color: #fff; background: #285a45; box-shadow: 0 5px 12px rgba(40,90,69,.16); }
+.button.primary:hover { background: #1d4937; box-shadow: 0 7px 15px rgba(40,90,69,.22); }
+.button.secondary { border-color: #e5ebe4; color: #53685a; background: #f7f9f6; }
+.button.secondary:hover { color: #244b38; background: #edf4ed; }
+.button.danger { color: #a64f43; background: #fbefec; }
+.button.danger:hover { color: #fff; background: #bc6556; }
+.button.small { min-height: 29px; padding: 6px 10px; border-radius: 7px; font-size: 9px; }
+
+/* Tabel diberi header lembut, garis tipis, dan hover setiap baris. */
+.table-wrap { width: 100%; overflow-x: auto; }
+table { width: 100%; border-collapse: separate; border-spacing: 0; color: #4b5e52; font-size: 10px; }
+th, td { padding: 12px 11px; border-bottom: 1px solid #edf1ec; text-align: left; vertical-align: middle; }
+th { color: #819086; background: #f7f9f6; font-size: 8px; font-weight: 800; letter-spacing: .9px; text-transform: uppercase; white-space: nowrap; }
+th:first-child { border-radius: 8px 0 0 8px; }
+th:last-child { border-radius: 0 8px 8px 0; }
+td { color: #55665b; line-height: 1.5; }
+td:first-child { color: #8b9a8e; font-size: 9px; }
+td:nth-child(2) { color: #2d4d3b; font-weight: 700; }
+tbody tr { transition: background .14s ease; }
+tbody tr:hover td { background: #fbfcf9; }
+tbody tr:last-child td { border-bottom: 0; }
+.actions { display: flex; align-items: center; gap: 6px; white-space: nowrap; }
+.actions form { display: inline-flex; margin: 0; }
+.empty { padding: 25px 12px; color: #929d94; text-align: center; }
+.notice { margin: 0 0 15px; padding: 11px 13px; border: 1px solid #f0dfbd; border-radius: 9px; color: #8b6738; background: #fff8e9; font-size: 10px; line-height: 1.6; }
+
+/* Pesan hasil CRUD memiliki tanda visual sesuai sukses atau gagal. */
+.alert { display: flex; align-items: center; gap: 10px; margin: 0 0 19px; padding: 12px 15px; border: 1px solid transparent; border-radius: 11px; font-size: 11px; line-height: 1.5; }
+.alert-mark { display: grid; width: 22px; height: 22px; flex: 0 0 22px; place-items: center; border-radius: 50%; font-size: 11px; font-weight: 900; }
+.alert.success { border-color: #d6e9d9; color: #2e6944; background: #edf7ee; }
+.alert.success .alert-mark { color: #fff; background: #4f9361; }
+.alert.error { border-color: #f0d8d2; color: #9b4c40; background: #fff1ed; }
+.alert.error .alert-mark { color: #fff; background: #c56a59; }
+
+/* Footer sederhana agar halaman tetap terasa selesai dan konsisten. */
+.footer { display: flex; justify-content: space-between; gap: 12px; padding: 18px 3px 3px; color: #9aa49c; font-size: 9px; }
+.footer strong { color: #66806f; }
+
+/* Tablet: sidebar mengecil dan jarak konten dirapatkan. */
+@media (max-width: 1050px) {
+    .sidebar { flex-basis: 218px; width: 218px; padding-right: 15px; padding-left: 15px; }
+    .workspace { width: calc(100% - 218px); padding-right: 25px; padding-left: 25px; }
+    .welcome-art { min-width: 225px; }
+    .stack-back { right: 125px; }
+    .stack-middle { right: 40px; }
+    .stack-front { right: 78px; }
+}
+
+/* Ponsel: sidebar berubah menjadi navigasi ringkas di bagian atas. */
+@media (max-width: 760px) {
+    .app-shell { display: block; }
+    .sidebar { position: relative; width: 100%; height: auto; min-height: 0; padding: 15px 18px 13px; }
+    .sidebar-rule, .sidebar-label, .sidebar-note, .sidebar-bottom { display: none; }
+    .brand-mark { width: 37px; height: 37px; border-radius: 11px; }
+    .brand-copy strong { font-size: 18px; }
+    .side-navigation { display: flex; gap: 6px; margin-top: 14px; overflow-x: auto; }
+    .side-link { min-height: 39px; flex: 1 0 auto; gap: 7px; padding: 0 10px; border-radius: 9px; font-size: 10px; }
+    .nav-icon svg { width: 16px; height: 16px; }
+    .nav-count { min-width: 19px; padding: 3px 5px; font-size: 9px; }
+    .workspace { width: 100%; padding: 0 17px 20px; }
+    .topbar { min-height: 67px; }
+    .profile-copy { display: none; }
+    .profile-chevron { display: none; }
+    .profile-chip { padding: 5px; }
+    .welcome-banner { min-height: 190px; }
+    .welcome-copy { max-width: 70%; padding: 23px 0 23px 20px; }
+    .welcome-copy h2 { font-size: 25px; }
+    .welcome-copy > p { font-size: 10px; }
+    .welcome-art { position: absolute; right: 0; bottom: 0; width: 34%; min-width: 120px; opacity: .84; }
+    .book-stack { right: 15px; width: 75px; height: 101px; }
+    .stack-back { right: 56px; width: 65px; height: 80px; }
+    .stack-middle { right: -5px; width: 66px; height: 88px; }
+    .stack-front { right: 22px; width: 72px; height: 105px; }
+    .stack-front::after { top: 21px; right: 12px; left: 12px; height: 35px; font-size: 23px; line-height: 33px; }
+    .art-sun { top: 20px; right: 40px; width: 47px; height: 47px; }
+    .art-caption, .art-leaf { display: none; }
+    .stats-grid { gap: 9px; margin: 13px 0 21px; }
+    .stat-card { min-height: 91px; grid-template-columns: 1fr; padding: 12px; }
+    .stat-icon { display: none; }
+    .stat-number { font-size: 22px; }
+    .stat-label { font-size: 9px; }
+    .stat-foot { font-size: 8px; }
+    .panel { padding: 17px 15px; border-radius: 14px; }
+    .form-grid, .form-grid.two-columns { grid-template-columns: 1fr; }
+    .section-heading { align-items: flex-start; }
+    .section-heading h2 { font-size: 22px; }
+    .count-label { padding: 7px 9px; font-size: 9px; }
+    .footer { flex-direction: column; gap: 5px; }
+}
+
+/* Ponsel kecil: banner dan tabel disesuaikan agar tidak melebar. */
+@media (max-width: 420px) {
+    .workspace { padding-right: 12px; padding-left: 12px; }
+    .welcome-copy { max-width: 76%; padding-left: 16px; }
+    .welcome-copy h2 { font-size: 22px; }
+    .welcome-tag { font-size: 7px; letter-spacing: 1px; }
+    .welcome-art { width: 31%; opacity: .7; }
+    .stats-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .stat-card { padding: 10px 8px; }
+    .stat-foot { line-height: 1.3; }
+    th, td { padding: 10px 8px; }
+    .actions { flex-direction: column; align-items: stretch; }
+}
