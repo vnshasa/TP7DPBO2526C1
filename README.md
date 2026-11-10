@@ -151,7 +151,7 @@ Folder `view/` berisi tampilan yang dipanggil oleh `index.php`.
 
 Query database yang dijalankan dari PHP menggunakan PDO prepared statement. Nilai input dikirim melalui `execute()` secara terpisah dari teks query. Dengan demikian, input pengguna tidak digabungkan langsung ke dalam string SQL.
 
-## 🚀 Cara Menjalankan Program
+## Cara Menjalankan Program
 
 1. Pastikan Laragon atau XAMPP sudah terpasang.
 2. Salin folder `program` ke direktori web server:
