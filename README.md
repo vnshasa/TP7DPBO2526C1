@@ -164,16 +164,18 @@ Query database yang dijalankan dari PHP menggunakan PDO prepared statement. Nila
 
 **Catatan:** file SQL menggunakan `DROP TABLE IF EXISTS` sebelum membuat ulang tabel. Mengimpor ulang file tersebut akan menghapus data yang sudah ada pada tabel project dan menggantinya dengan data awal.
 
-## 🎥 Demo
+## Demo
 
 ### Demo Penggunaan
 
 Video ini memperlihatkan penggunaan aplikasi dan pengujian operasi CRUD pada halaman yang tersedia.
 
-`documentation/demo.mp4`
+https://github.com/user-attachments/assets/7d096fc6-e17e-477d-a59d-6ebb59b49ef3
 
 ### Tampilan Database
 
 Video ini memperlihatkan database `db_perpustakaan`, tabel-tabel yang digunakan, isi data, dan struktur relasinya melalui HeidiSQL.
 
-`documentation/db-read.mp4`
+https://github.com/user-attachments/assets/14a1d964-5f0d-430a-b900-a4cd57d1695d
+
+
